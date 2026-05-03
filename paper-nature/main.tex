@@ -43,7 +43,7 @@
 \title{\textbf{The Ramification Index: RAM Prices, Oligopoly Cycles, and the Downstream Consequences of Semiconductor Pricing as an Economic Signal}}
 
 \author{%
-  Khayyam Wakil\thanks{Correspondence: \href{mailto:the@knowware.institute}{the@knowware.institute}.\ The ARC Institute of Knowware, Calgary, AB, Canada. Data and reproducible code: \url{https://github.com/iamkhayyam/memory-index}.}%
+  Khayyam Wakil\thanks{Correspondence: \href{mailto:the@knowware.institute}{the@knowware.institute}.\ The ARC Institute of Knowware, Calgary, AB, Canada. Data and reproducible code: \url{https://github.com/fromknowware/memory-index}.}%
 }
 
 \date{April 2026}
@@ -147,7 +147,7 @@ i.e., the annual log first-difference of mid-year mainstream DRAM price per MB. 
 
 \subsection{Evaluation}
 
-We score each index against the six NBER-dated recessions 1980--82, 1990--91, 2001, 2008--09, and 2020, awarding:
+We score each index against the six NBER-dated recessions 1980, 1981--82, 1990--91, 2001, 2008--09, and 2020, awarding:
 (i) \emph{Signalled} if the index moved in the hypothesised direction in the four quarters around peak;
 (ii) \emph{No signal} if the move was within one standard deviation;
 (iii) \emph{Anti-signal} if the index moved \emph{opposite} to its hypothesis.
@@ -156,22 +156,22 @@ We score each index against the six NBER-dated recessions 1980--82, 1990--91, 20
 
 \subsection{Recession coverage}
 
-Table~\ref{tab:coverage} shows the scoring. The Ramification Index signals all six recessions since 1980; no other index signals more than three.
+Table~\ref{tab:coverage} shows the scoring. The Ramification Index signals all six recessions since 1980; no other index signals more than four.
 
 \begin{table}[h]
 \centering
 \caption{Recession signal performance by index. S = Signalled. NS = No signal. AS = Anti-signal. Coverage windows are limited to periods in which each index's supporting data series exists.}
 \label{tab:coverage}
 \small
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccccc}
 \toprule
-Index & 80--82 & 90--91 & 2001 & 08--09 & 2020 & Score \\
+Index & 1980 & 81--82 & 90--91 & 2001 & 08--09 & 2020 & Score \\
 \midrule
-Ramification Index & S & S & S & S & S & 6/6 \\
-Popcorn   & S & NS & S & S & AS & 3/6 \\
-Hemline (lagged) & S & S & NS & S & NS & 3/6 \\
-Lipstick (modern) & n/a & n/a & S & AS & AS & 1/3 \\
-MUI (modern)      & n/a & n/a & n/a & S & AS & 1/3 \\
+Ramification Index & S & S & S & S & S & S & 6/6 \\
+Popcorn   & S & S & NS & S & S & AS & 4/6 \\
+Hemline (lagged) & S & S & S & NS & S & NS & 4/6 \\
+Lipstick (modern) & n/a & n/a & n/a & S & AS & AS & 1/3 \\
+MUI (modern)      & n/a & n/a & n/a & n/a & S & AS & 1/3 \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,8 +1,8 @@
 # The Ramification Index
 
-[![Site](https://img.shields.io/badge/site-live-ffb347?style=for-the-badge&logo=github&logoColor=white&labelColor=20232d)](https://iamkhayyam.github.io/memory-index/)
+[![Site](https://img.shields.io/badge/site-live-ffb347?style=for-the-badge&logo=github&logoColor=white&labelColor=20232d)](https://fromknowware.github.io/memory-index/)
 [![Status](https://img.shields.io/badge/status-working%20paper-ff9500?style=for-the-badge&logo=arxiv&logoColor=white&labelColor=20232d)]()
-[![Last Commit](https://img.shields.io/github/last-commit/iamkhayyam/memory-index?style=for-the-badge&logo=github&logoColor=white&labelColor=20232d&color=6ed3ff)](https://github.com/iamkhayyam/memory-index/commits/main)
+[![Last Commit](https://img.shields.io/github/last-commit/fromknowware/memory-index?style=for-the-badge&logo=github&logoColor=white&labelColor=20232d&color=6ed3ff)](https://github.com/fromknowware/memory-index/commits/main)
 [![Data](https://img.shields.io/badge/data-1980–2026-4a7cc7?style=for-the-badge&labelColor=20232d)]()
 [![License](https://img.shields.io/badge/license-CC%20BY%204.0-8b949e?style=for-the-badge&logo=creativecommons&logoColor=white&labelColor=20232d)](https://creativecommons.org/licenses/by/4.0/)
 
