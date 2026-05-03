@@ -460,6 +460,88 @@
     }
     footer a { color: var(--mui); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+
+    /* ── MOBILE DASHBOARD CTA ─────────────────────────── */
+    .dash-mobile-cta {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45em;
+      min-height: 58px;
+      border: 1px solid rgba(255,179,71,0.45);
+      color: var(--ram);
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: rgba(255,179,71,0.04);
+      transition: background 0.15s;
+    }
+    .dash-mobile-cta:hover { background: rgba(255,179,71,0.1); }
+
+    /* ── SCORECARD EXPAND TOGGLE ──────────────────────── */
+    .scorecard-expand-wrap { display: none; margin-top: 0.7rem; }
+    .scorecard-expand-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      padding: 0.4em 0.95em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      min-height: 36px;
+    }
+    .scorecard-expand-btn:hover { color: var(--text); border-color: var(--border2); }
+
+    /* ── MOBILE ≤ 600px ───────────────────────────────── */
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+
+      header { padding: 2.5rem 1.25rem 2rem; }
+
+      .shield-row { gap: 0.4rem; }
+      .shield-row img { height: 24px; }
+
+      /* 44px touch targets on pills */
+      .pill { min-height: 44px; }
+      .pill-dl { min-height: 44px; }
+
+      /* Scorecard: show only Index (col 1) + Score (col 8) */
+      .table-wrap table th:nth-child(n+2):nth-child(-n+7),
+      .table-wrap table td:nth-child(n+2):nth-child(-n+7) { display: none; }
+
+      /* Expanded state: reveal all cols in scrollable container */
+      .table-wrap.expanded table th:nth-child(n+2):nth-child(-n+7),
+      .table-wrap.expanded table td:nth-child(n+2):nth-child(-n+7) { display: table-cell; }
+      .table-wrap.expanded table { font-size: 0.73rem; }
+      .table-wrap.expanded th,
+      .table-wrap.expanded td  { padding: 0.5rem 0.45rem; }
+
+      .scorecard-expand-wrap { display: block; }
+
+      /* Force triple grid to single column */
+      .triple-grid { grid-template-columns: 1fr; }
+
+      /* Dashboard: swap iframe for a link button */
+      .dash-wrap { display: none; }
+      .dash-mobile-cta { display: flex; }
+
+      /* Citation: tighter mono size to aid horizontal scroll */
+      .cite-box { font-size: 0.72rem; }
+
+      /* Audio: 44px tap target on play button; roomier speed chips */
+      .ap-btn  { width: 44px; height: 44px; font-size: 13px; }
+      .ap-speed { padding: 3px 8px; font-size: 0.67rem; }
+      .ap-time  { min-width: 62px; font-size: 0.67rem; }
+    }
+
+    /* ── REDUCED MOTION ───────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      #progress { display: none; }
+      .transcript-panel { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -586,6 +668,9 @@
     <p style="font-size:0.73rem;color:var(--muted);margin-top:0.6rem;">
       S&nbsp;=&nbsp;Signalled &nbsp;&middot;&nbsp; NS&nbsp;=&nbsp;No signal &nbsp;&middot;&nbsp; AS&nbsp;=&nbsp;Anti-signal &nbsp;&middot;&nbsp; n/a&nbsp;=&nbsp;series unavailable
     </p>
+    <div class="scorecard-expand-wrap">
+      <button class="scorecard-expand-btn" id="scorecardExpandBtn">↔ Show all recessions</button>
+    </div>
   </section>
 
   <section>
@@ -625,6 +710,7 @@
       </div>
       <iframe src="dashboard.html?embed" title="Ramification Index interactive dashboard" loading="lazy"></iframe>
     </div>
+    <a class="dash-mobile-cta" href="dashboard.html">Open Interactive Dashboard ↗</a>
   </section>
 
   <section>
@@ -1129,6 +1215,19 @@ Keep your eyes on the basement valve, folks. Forget the lipstick. Thanks for joi
     }
   });
 
+})();
+</script>
+
+<script>
+/* ── SCORECARD EXPAND TOGGLE (mobile) ─────────────────── */
+(function () {
+  var btn  = document.getElementById('scorecardExpandBtn');
+  if (!btn) return;
+  var wrap = btn.closest('section').querySelector('.table-wrap');
+  btn.addEventListener('click', function () {
+    var expanded = wrap.classList.toggle('expanded');
+    btn.textContent = expanded ? '↕ Collapse' : '↔ Show all recessions';
+  });
 })();
 </script>
 
