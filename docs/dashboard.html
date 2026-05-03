@@ -136,6 +136,63 @@
     line-height: 1.6;
   }
   .ct-pill.on { opacity: 1; }
+
+  /* ── MOBILE ≤ 640px ───────────────────────────────── */
+  @media (max-width: 640px) {
+    header {
+      padding: 20px 16px 14px;
+    }
+    header h1 {
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    header p {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .controls {
+      padding: 8px 14px;
+      gap: 2px 10px;
+    }
+    .controls label {
+      font-size: 11px;
+      min-height: 32px;
+    }
+
+    main {
+      padding: 14px 14px 56px;
+      gap: 14px;
+    }
+
+    canvas { height: 220px !important; }
+
+    .card {
+      padding: 14px 14px 12px;
+      border-radius: 8px;
+    }
+    .card h2 { font-size: 14px; }
+    .card p  { font-size: 12px; margin-bottom: 10px; }
+
+    /* Tables: contained scroll within card — not full-page overflow */
+    table.corr {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-size: 12px;
+    }
+    table.corr th,
+    table.corr td {
+      padding: 7px 8px;
+      white-space: nowrap;
+    }
+
+    footer {
+      padding: 14px 16px 30px;
+      font-size: 11px;
+    }
+    footer code { word-break: break-all; }
+  }
 </style>
 </head>
 <body>
