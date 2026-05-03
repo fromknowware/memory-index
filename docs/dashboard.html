@@ -139,17 +139,15 @@
 
   /* ── MOBILE ≤ 640px ───────────────────────────────── */
   @media (max-width: 640px) {
+    /* Hard-stop overflow at the root — Chart.js can still compute
+       canvas width from the constrained container */
+    html, body { overflow-x: hidden; max-width: 100%; }
+
     header {
       padding: 20px 16px 14px;
     }
-    header h1 {
-      font-size: 18px;
-      line-height: 1.2;
-    }
-    header p {
-      font-size: 12px;
-      line-height: 1.5;
-    }
+    header h1 { font-size: 18px; line-height: 1.2; }
+    header p  { font-size: 12px; line-height: 1.5; }
 
     .controls {
       padding: 8px 14px;
@@ -163,18 +161,25 @@
     main {
       padding: 14px 14px 56px;
       gap: 14px;
+      /* ensure main never pushes past viewport */
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
-    canvas { height: 220px !important; }
-
+    /* Cards must clip their canvas children */
     .card {
       padding: 14px 14px 12px;
       border-radius: 8px;
+      overflow: hidden;    /* clip any canvas that Chart.js renders wide */
+      max-width: 100%;
+      box-sizing: border-box;
     }
     .card h2 { font-size: 14px; }
     .card p  { font-size: 12px; margin-bottom: 10px; }
 
-    /* Tables: contained scroll within card — not full-page overflow */
+    canvas { height: 220px !important; }
+
+    /* Tables: contained scroll within card */
     table.corr {
       display: block;
       overflow-x: auto;
@@ -292,6 +297,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 <script>
 Chart.register(window['chartjs-plugin-annotation']);
+const isMobile = window.innerWidth < 640;
 
 // ---- Data (inlined from ../data/indices-wide.csv) -------------------------
 const ROWS = [
@@ -424,13 +430,36 @@ const commonOpts = (yType='linear', yTitle='') => ({
   maintainAspectRatio: false,
   interaction: { intersect: false, mode: 'index' },
   plugins: {
-    legend: { labels: { color: '#cfd3dc' } },
+    legend: {
+      labels: {
+        color: '#cfd3dc',
+        boxWidth: isMobile ? 12 : 40,
+        font: { size: isMobile ? 10 : 12 },
+      },
+    },
     tooltip: { backgroundColor: '#181a22' },
     annotation: { annotations: recessionBands() },
   },
   scales: {
-    x: { ticks: { color: '#8a8f9b' }, grid: { color: '#1b1e27' } },
-    y: { type: yType, ticks: { color: '#8a8f9b' }, grid: { color: '#1b1e27' }, title: { display: !!yTitle, text: yTitle, color: '#8a8f9b' } },
+    x: {
+      ticks: {
+        color: '#8a8f9b',
+        font: { size: isMobile ? 9 : 11 },
+        maxTicksLimit: isMobile ? 6 : 12,
+        maxRotation: isMobile ? 0 : 50,
+      },
+      grid: { color: '#1b1e27' },
+    },
+    y: {
+      type: yType,
+      ticks: { color: '#8a8f9b', font: { size: isMobile ? 9 : 11 } },
+      grid: { color: '#1b1e27' },
+      title: {
+        display: !isMobile && !!yTitle,
+        text: yTitle,
+        color: '#8a8f9b',
+      },
+    },
   },
 });
 
@@ -481,7 +510,7 @@ function makeDataset(label, data, color, hidden=false) {
 const chartNorm = new Chart(document.getElementById('chartNormalized'), {
   type: 'line',
   data: { labels: years, datasets: [
-    { ...makeDataset('RAM (inv, 2001=100)', normRAM, '#ffb347'), _seriesKey: 'ram' },
+    { ...makeDataset(isMobile ? 'RAM' : 'RAM (inv, 2001=100)', normRAM, '#ffb347'), _seriesKey: 'ram' },
     { ...makeDataset('Lipstick',  normLipstick, '#ff4d88'), _seriesKey: 'lipstick' },
     { ...makeDataset('Hemline',   normHemline,  '#9d7cff'), _seriesKey: 'hemline' },
     { ...makeDataset('MUI',       normMUI,      '#6ed3ff'), _seriesKey: 'mui' },
@@ -500,11 +529,11 @@ const popcornYoY   = yoyPct(popcornB);
 const chartYoy = new Chart(document.getElementById('chartYoy'), {
   type: 'line',
   data: { labels: years, datasets: [
-    { ...makeDataset('RAM YoY (inv, %)', ramYoY,      '#ffb347'), _seriesKey: 'ram' },
-    { ...makeDataset('Lipstick YoY (%)', lipstickYoY, '#ff4d88'), _seriesKey: 'lipstick' },
-    { ...makeDataset('Hemline YoY (%)',  hemlineYoY,  '#9d7cff'), _seriesKey: 'hemline' },
-    { ...makeDataset('MUI YoY (%)',      muiYoY,      '#6ed3ff'), _seriesKey: 'mui' },
-    { ...makeDataset('Popcorn YoY (%)',  popcornYoY,  '#e6e86b'), _seriesKey: 'popcorn' },
+    { ...makeDataset(isMobile ? 'RAM' : 'RAM YoY (inv, %)',      ramYoY,      '#ffb347'), _seriesKey: 'ram' },
+    { ...makeDataset(isMobile ? 'Lipstick' : 'Lipstick YoY (%)', lipstickYoY, '#ff4d88'), _seriesKey: 'lipstick' },
+    { ...makeDataset(isMobile ? 'Hemline'  : 'Hemline YoY (%)',  hemlineYoY,  '#9d7cff'), _seriesKey: 'hemline' },
+    { ...makeDataset(isMobile ? 'MUI'      : 'MUI YoY (%)',      muiYoY,      '#6ed3ff'), _seriesKey: 'mui' },
+    { ...makeDataset(isMobile ? 'Popcorn'  : 'Popcorn YoY (%)',  popcornYoY,  '#e6e86b'), _seriesKey: 'popcorn' },
   ]},
   options: commonOpts('linear', '% change YoY'),
 });
