@@ -527,8 +527,20 @@
       .dash-wrap { display: none; }
       .dash-mobile-cta { display: flex; }
 
-      /* Citation: tighter mono size to aid horizontal scroll */
-      .cite-box { font-size: 0.72rem; }
+      /* Key Results bento: hidden on mobile */
+      #key-results { display: none; }
+
+      /* Citation: wrap instead of scroll — no horizontal overflow */
+      .cite-box {
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-x: visible;
+        font-size: 0.72rem;
+      }
+
+      /* Scorecard: no expand toggle, no horizontal scroll */
+      .scorecard-expand-wrap { display: none !important; }
+      .table-wrap { overflow-x: visible; }
 
       /* Audio: 44px tap target on play button; roomier speed chips */
       .ap-btn  { width: 44px; height: 44px; font-size: 13px; }
@@ -617,7 +629,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="key-results">
     <h2>Key Results</h2>
     <div class="stats" id="bento">
       <div class="stat-card"><div class="stat-num">6/6</div><div class="stat-label">NBER recessions correctly signalled since 1980</div></div>
